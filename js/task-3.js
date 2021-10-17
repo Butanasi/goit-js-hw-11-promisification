@@ -16,13 +16,13 @@ const randomIntegerFromInterval = (min, max) => {
 //   }, delay);
 // };
 
-const logSuccess = (id, time) => {
-  console.log(`Transaction ${id} processed in ${time}ms`);
-};
+// const logSuccess = (id, time) => {
+//   console.log(`Transaction ${id} processed in ${time}ms`);
+// };
 
-const logError = id => {
-  console.warn(`Error processing transaction ${id}. Please try again later.`);
-};
+// const logError = id => {
+//   console.warn(`Error processing transaction ${id}. Please try again later.`);
+// };
 
 // /*
 //  * Работает так
@@ -37,34 +37,36 @@ const logError = id => {
 const makeTransaction = transaction => {
     const delay = randomIntegerFromInterval(200, 500);
     
-    return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
+      const canProcess = Math.random() > 0.3;
          setTimeout(() => {
-    const canProcess = Math.random() > 0.3;
-
-    if (canProcess) {
-      resolve(transaction.id, delay);
-    } else {
-      reject(transaction.id);
-    }
+          if (canProcess) {
+            resolve({ id: transaction.id, time: delay });
+          }
+            reject(transaction.id);
+    
   }, delay);
     })
- 
+    
+};
+
+const logSuccess = ({ id, time }) => {
+  console.log(`Transaction ${id} processed in ${time}ms`);
+};
+
+const logError = id => {
+  console.warn(`Error processing transaction ${id}. Please try again later.`);
 };
 
 
+
+makeTransaction({ id: 70, amount: 150 }).then(logSuccess).catch(logError);
+
+makeTransaction({ id: 71, amount: 230 }).then(logSuccess).catch(logError);
+
+makeTransaction({ id: 72, amount: 75 }).then(logSuccess).catch(logError);
+
+makeTransaction({ id: 73, amount: 100 }).then(logSuccess).catch(logError);
+
+
  
-makeTransaction({ id: 70, amount: 150 })
-  .then(logSuccess)
-  .catch(logError);
-
-makeTransaction({ id: 71, amount: 230 })
-  .then(logSuccess)
-  .catch(logError);
-
-makeTransaction({ id: 72, amount: 75 })
-  .then(logSuccess)
-  .catch(logError);
-
-makeTransaction({ id: 73, amount: 100 })
-  .then(logSuccess)
-  .catch(logError);

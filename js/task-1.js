@@ -6,7 +6,7 @@ const delay = ms => {
         setTimeout(() => {
             resolve(time);
             
-        }, delay)
+        },ms)
         
          
     })
